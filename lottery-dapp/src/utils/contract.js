@@ -19,7 +19,7 @@ let contract;
 
 export const switchToSomnia = async () => {
   if (!window.ethereum) {
-    throw new Error("Metamask not found");
+    throw new Error("MetaMask not found");
   }
 
   const currentChainId = await window.ethereum.request({ method: 'eth_chainId' });
