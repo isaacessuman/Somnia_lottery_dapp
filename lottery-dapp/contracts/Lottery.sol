@@ -12,6 +12,7 @@ contract LotteryContract {
     uint256 public constant FIRST_PRIZE = 2.5 ether;
     uint256 public constant SECOND_PRIZE = 1.5 ether;
     uint256 public constant THIRD_PRIZE = 1 ether;
+    uint256 public constant TOTAL_PRIZE = FIRST_PRIZE + SECOND_PRIZE + THIRD_PRIZE;
     uint256 public constant MIN_PARTICIPANTS = 3;
     uint256 public constant MAX_TICKETS_PER_WALLET = 2;
     
@@ -99,8 +100,10 @@ contract LotteryContract {
         
         require(!currentRound.isActive, "Round still active");
         require(!currentRound.drawingComplete, "Drawing already complete");
-        require(currentRound.participants.length >= MIN_PARTICIPANTS, 
+        require(currentRound.participants.length >= MIN_PARTICIPANTS,
                 "Not enough participants");
+        require(address(this).balance >= TOTAL_PRIZE,
+                "Contract balance insufficient for prizes");
         
         // Select winners
         selectWinners();
